@@ -1,0 +1,52 @@
+# OS
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# IDEs und Editors
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Build-Output
+/build/
+/out/
+/bin/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Env & Secrets
+.env
+.env.*
+
+# Logs
+*.log
+
+# Kotlin-specific
+.kotlin/
+
+# Test Reports
+/test-results/
+
+# Spring Tool Suite (STS)
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+.nb-gradle/
+
+# Docker (optional)
+docker-compose.override.yml
