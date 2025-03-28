@@ -1,6 +1,7 @@
 package de.slotmyvelo.user.infrastructure.persistence.entity
 
 import de.slotmyvelo.auth.domain.model.UserRole
+import de.slotmyvelo.user.domain.model.UserProfile
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -45,3 +46,34 @@ data class UserEntity(
         LocalDateTime.now(), LocalDateTime.now()
     )
 }
+
+fun UserEntity.toDomain(): UserProfile {
+    return UserProfile(
+        id = id ?: throw IllegalStateException("User ID must not be null"),
+        name = name,
+        email = email,
+        phoneNumber = phoneNumber,
+        role = role,
+        street = street,
+        city = city,
+        postalCode = postalCode,
+        country = country,
+        createdAt = LocalDateTime.now(),
+        updatedAt = LocalDateTime.now()
+    )
+}
+
+fun UserProfile.toEntity(): UserEntity {
+    return UserEntity(
+        id = id,
+        name = name,
+        email = email,
+        phoneNumber = phoneNumber,
+        role = role,
+        street = street,
+        city = city,
+        postalCode = postalCode,
+        country = country
+    )
+}
+
