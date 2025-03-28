@@ -20,4 +20,9 @@ class AuthUserPersistenceAdapter(
     override fun existsByEmail(email: String): Boolean {
         return repository.existsByEmail(email)
     }
+
+    override fun findByEmail(email: String): AuthUser? {
+        return repository.findByEmail(email)
+            ?.let { AuthUserMapper.toDomain(it) }
+    }
 }
