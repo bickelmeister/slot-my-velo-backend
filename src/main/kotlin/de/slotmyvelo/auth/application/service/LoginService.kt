@@ -1,5 +1,6 @@
 package de.slotmyvelo.auth.application.service
 
+import de.slotmyvelo.auth.application.exception.InvalidCredentialsException
 import de.slotmyvelo.auth.application.port.`in`.LoginCommand
 import de.slotmyvelo.auth.application.port.`in`.LoginUseCase
 import de.slotmyvelo.auth.application.port.out.AuthUserPersistencePort
@@ -16,14 +17,13 @@ class LoginService(
 
     override fun login(command: LoginCommand): LoginResponse {
         val user = authUserPersistencePort.findByEmail(command.email)
-            ?: throw IllegalArgumentException("Invalid credentials")
+            ?: throw InvalidCredentialsException()
 
         if (!passwordHashingService.verify(command.password, user.passwordHash)) {
-            throw IllegalArgumentException("Invalid credentials")
+            throw InvalidCredentialsException()
         }
 
         val token = tokenProvider.generateToken(user)
-
         return LoginResponse(accessToken = token)
     }
 }

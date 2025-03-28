@@ -8,6 +8,7 @@ import de.slotmyvelo.auth.web.dto.RegisterRequest
 import de.slotmyvelo.auth.web.dto.AuthUserResponse
 import de.slotmyvelo.auth.web.dto.LoginRequest
 import de.slotmyvelo.auth.web.dto.LoginResponse
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
@@ -28,7 +29,7 @@ class AuthController(
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody request: LoginRequest): ResponseEntity<LoginResponse> {
+    fun login(@Valid @RequestBody request: LoginRequest): ResponseEntity<LoginResponse> {
         val token = loginUseCase.login(
             LoginCommand(
                 email = request.email,

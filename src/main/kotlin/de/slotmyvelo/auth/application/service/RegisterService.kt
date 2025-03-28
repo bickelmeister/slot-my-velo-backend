@@ -1,5 +1,6 @@
 package de.slotmyvelo.auth.application.service
 
+import de.slotmyvelo.auth.application.exception.EmailAlreadyUsedException
 import de.slotmyvelo.auth.application.port.`in`.RegisterCommand
 import de.slotmyvelo.auth.application.port.`in`.RegisterUseCase
 import de.slotmyvelo.auth.application.port.out.AuthUserPersistencePort
@@ -16,7 +17,7 @@ class RegisterService(
 
     override fun register(command: RegisterCommand): AuthUser {
         if (authUserPersistencePort.existsByEmail(command.email)) {
-            throw IllegalArgumentException("E-Mail already in use")
+            throw EmailAlreadyUsedException(command.email)
         }
 
         val hashedPassword = passwordHashingService.hash(command.password)
