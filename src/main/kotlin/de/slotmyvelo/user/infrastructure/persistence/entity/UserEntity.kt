@@ -1,4 +1,4 @@
-package de.slotmyvelo.auth.infrastructure.persistence.entity
+package de.slotmyvelo.user.infrastructure.persistence.entity
 
 import de.slotmyvelo.auth.domain.model.UserRole
 import jakarta.persistence.*
@@ -6,7 +6,8 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "users")
-data class AuthUserEntity(
+data class UserEntity(
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
@@ -17,12 +18,20 @@ data class AuthUserEntity(
     @Column(nullable = false, unique = true)
     val email: String,
 
-    @Column(nullable = false)
-    val passwordHash: String,
+    @Column(name = "phone_number")
+    val phoneNumber: String? = null,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     val role: UserRole,
+
+    val street: String? = null,
+    val city: String? = null,
+
+    @Column(name = "postal_code")
+    val postalCode: String? = null,
+
+    val country: String? = null,
 
     @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
@@ -31,12 +40,8 @@ data class AuthUserEntity(
     val updatedAt: LocalDateTime = LocalDateTime.now()
 ) {
     constructor() : this(
-        id = null,
-        name = "",
-        email = "",
-        passwordHash = "",
-        role = UserRole.CUSTOMER,
-        createdAt = LocalDateTime.now(),
-        updatedAt = LocalDateTime.now()
+        null, "", "", null, UserRole.CUSTOMER,
+        null, null, null, null,
+        LocalDateTime.now(), LocalDateTime.now()
     )
 }

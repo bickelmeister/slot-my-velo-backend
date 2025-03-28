@@ -4,7 +4,6 @@ import de.slotmyvelo.auth.application.port.out.TokenProvider
 import de.slotmyvelo.auth.domain.model.AuthUser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.Date
@@ -12,14 +11,11 @@ import javax.crypto.SecretKey
 
 @Component
 class JwtTokenProvider(
-    @Value("\${spring.security.oauth2.resourceserver.jwt.secret-key}")
-    secret: String,
-
+    private val keyProvider: JwtKeyProvider,
     @Value("\${security.jwt.expiration-ms:3600000}")
     private val expirationMs: Long
-) : TokenProvider {
-
-    private val key: SecretKey = Keys.hmacShaKeyFor(secret.toByteArray())
+): TokenProvider {
+    private val key = keyProvider.key
 
     override fun generateToken(user: AuthUser): String {
         val now = Date()

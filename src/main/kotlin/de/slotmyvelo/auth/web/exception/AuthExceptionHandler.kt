@@ -2,6 +2,7 @@ package de.slotmyvelo.auth.web.exception
 
 import de.slotmyvelo.auth.application.exception.EmailAlreadyUsedException
 import de.slotmyvelo.auth.application.exception.InvalidCredentialsException
+import de.slotmyvelo.auth.application.exception.InvalidTokenException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus
@@ -18,6 +19,14 @@ class AuthExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException::class)
     fun handleInvalidCredentials(
         ex: InvalidCredentialsException,
+        request: HttpServletRequest
+    ): ResponseEntity<ApiError> {
+        return buildError(HttpStatus.UNAUTHORIZED, ex.message, request)
+    }
+
+    @ExceptionHandler(InvalidTokenException::class)
+    fun handleInvalidToken(
+        ex: InvalidTokenException,
         request: HttpServletRequest
     ): ResponseEntity<ApiError> {
         return buildError(HttpStatus.UNAUTHORIZED, ex.message, request)
