@@ -25,4 +25,21 @@ class AuthUserPersistenceAdapter(
         return repository.findByEmail(email)
             ?.let { AuthUserMapper.toDomain(it) }
     }
+
+    override fun updatePassword(userId: Long, newPasswordHash: String) {
+        val user = repository.findById(userId).orElseThrow {
+            IllegalArgumentException("User not found")
+        }
+
+        user.passwordHash = newPasswordHash
+        repository.save(user)
+    }
+
+    override fun updateEmail(userId: Long, newEmail: String) {
+        val user = repository.findById(userId).orElseThrow {
+            IllegalArgumentException("User not found")
+        }
+        user.email = newEmail
+        repository.save(user)
+    }
 }

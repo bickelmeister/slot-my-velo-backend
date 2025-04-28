@@ -20,7 +20,7 @@ class SecurityConfig(
             .csrf { it.disable() }
             .cors { }
             .authorizeHttpRequests {
-                it.requestMatchers("/auth/register", "/auth/login").permitAll()
+                it.requestMatchers("/auth/register", "/auth/login", "/auth/forgot-password", "/auth/reset-password").permitAll()
                 it.anyRequest().authenticated()
             }
             .oauth2ResourceServer {

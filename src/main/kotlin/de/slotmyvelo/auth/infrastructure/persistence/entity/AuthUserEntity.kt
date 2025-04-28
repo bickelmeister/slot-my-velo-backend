@@ -15,10 +15,10 @@ data class AuthUserEntity(
     val name: String,
 
     @Column(nullable = false, unique = true)
-    val email: String,
+    var email: String,
 
     @Column(nullable = false)
-    val passwordHash: String,
+    var passwordHash: String,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
